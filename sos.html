@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CalmaMind - SOS</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(to bottom, #dccff3, #e7dbf4, #f2ebfa);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .svg-waves {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      z-index: -1;
+    }
+
+    .circle {
+      width: 250px;
+      height: 250px;
+      background-color: rgba(186, 200, 255, 0.5);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      font-weight: 600;
+      color: #2c2c2c;
+      animation: breathe 8s ease-in-out infinite;
+      box-shadow: 0 0 25px rgba(0, 0, 0, 0.1);
+    }
+
+    @keyframes breathe {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.3); }
+    }
+
+    .phrase {
+      margin-top: 1.5rem;
+      font-size: 1.2rem;
+      color: #333;
+    }
+
+    .timer {
+      background: #5864f5;
+      color: #fff;
+      font-size: 1.1rem;
+      margin-top: 1rem;
+      padding: 0.5rem 1.4rem;
+      border-radius: 30px;
+      display: inline-block;
+    }
+
+    button {
+      background: #5864f5;
+      color: white;
+      font-size: 1.1rem;
+      padding: 0.9rem 2rem;
+      border: none;
+      border-radius: 30px;
+      margin-top: 1.4rem;
+      box-shadow: 0 5px 12px rgba(0,0,0,0.1);
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #4651e2;
+    }
+
+    @media (max-width: 600px) {
+      .circle {
+        width: 180px;
+        height: 180px;
+        font-size: 1.6rem;
+      }
+
+      .phrase {
+        font-size: 1rem;
+      }
+
+      .timer {
+        font-size: 1rem;
+        padding: 0.4rem 1.2rem;
+      }
+
+      button {
+        font-size: 1rem;
+        padding: 0.8rem 1.6rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <audio id="bg-audio" src="musica-calma.mp3" loop autoplay></audio>
+
+  <div class="circle" id="circle">Inhala</div>
+  <div class="phrase">Respirando calma tu mente.</div>
+  <div class="timer" id="timer">05:00</div>
+  <button onclick="location.href='index.html'">Volver al Inicio</button>
+
+  <!-- Fondo SVG embebido -->
+  <svg class="svg-waves" viewBox="0 0 1440 320" preserveAspectRatio="none">
+    <path fill="#d5ddf9" d="M0,192L60,186.7C120,181,240,171,360,165.3C480,160,600,160,720,154.7C840,149,960,139,1080,160C1200,181,1320,235,1380,261.3L1440,288L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"></path>
+  </svg>
+
+  <script>
+    // Verificación de suscripción
+    fetch('/api/validar-acceso', { credentials: 'include' })
+      .then(res => res.json())
+      .then(data => {
+        if (!data.acceso) window.location.href = 'pago.html';
+      });
+
+    // Música
+    const audio = document.getElementById('bg-audio');
+    document.body.addEventListener('click', () => {
+      if (audio.paused) audio.play();
+    });
+
+    // Animación de respiración
+    const circle = document.getElementById('circle');
+    const fases = ['Inhala', 'Exhala'];
+    let index = 0;
+    setInterval(() => {
+      index = (index + 1) % fases.length;
+      circle.textContent = fases[index];
+    }, 8000);
+
+    // Temporizador
+    const timer = document.getElementById('timer');
+    let total = 300;
+    const updateTime = () => {
+      const m = String(Math.floor(total / 60)).padStart(2, '0');
+      const s = String(total % 60).padStart(2, '0');
+      timer.textContent = `${m}:${s}`;
+      total--;
+      if (total >= 0) setTimeout(updateTime, 1000);
+    };
+    updateTime();
+  </script>
+</body>
+</html>
