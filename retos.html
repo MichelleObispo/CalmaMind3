@@ -1,0 +1,583 @@
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Retos Saludables</title>
+  <style>
+
+.btn-inicio-top {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background: #ffffff;
+    color: #5c3ca4;
+    border: 2px solid #5c3ca4;
+    padding: 0.5rem 1rem;
+    border-radius: 999px;
+    font-family: 'Segoe UI', sans-serif;
+    font-weight: 600;
+    text-decoration: none;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    transition: all 0.2s ease;
+    z-index: 1000;
+  }
+  .btn-inicio-top:hover {
+    background: #5c3ca4;
+    color: #fff;
+  }
+    
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4eaff;
+      margin: 0;
+      color: #333;
+    }
+    header {
+      background-color: #5c3ca4;
+      color: white;
+      text-align: center;
+      padding: 1.5rem 1rem;
+    }
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 1rem;
+    }
+    .progress-bar {
+      height: 10px;
+      width: 100%;
+      background-color: #e0d6f7;
+      border-radius: 5px;
+      overflow: hidden;
+      margin: 1rem 0;
+    }
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background-color: #5c3ca4;
+      transition: width 0.3s ease-in-out;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1rem;
+    }
+    .card {
+      background: white;
+      border-radius: 1rem;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      padding: 1rem;
+      transition: background-color 0.2s;
+      cursor: pointer;
+    }
+    .emoji {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+    .card.checked {
+      background-color: #e8ddff;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 999;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.6);
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-content {
+      background: white;
+      padding: 2rem;
+      border-radius: 1rem;
+      text-align: center;
+      max-width: 90%;
+    }
+    @media (max-width: 600px) {
+      .card {
+        padding: 0.8rem;
+      }
+    }
+  </style>
+
+<a href="index.html" class="btn-inicio-top">🏠 Inicio</a>
+
+</head>
+<body>
+<script>
+fetch("/api/validar-acceso")
+  .then(res => res.json())
+  .then(data => {
+    if (!data.acceso) {
+      alert("Debes haber iniciado sesión y tener un pago aprobado.");
+      window.location.href = "/index.html";
+    }
+  });
+</script>
+
+<header>
+  <h2>Retos saludables</h2>
+  <p>Selecciona hasta 5 retos por día</p>
+</header>
+<div class="container">
+  <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+  <div class="grid" id="retos-container">
+    <div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">💧</div>
+      <div>Bebe un vaso de agua antes de dormir</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">🤗</div>
+      <div>Abraza a un familiar</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">🐶</div>
+      <div>Pasea a tu mascota</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">🎧</div>
+      <div>Escucha un podcast</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">📘</div>
+      <div>Lee 10 páginas de un libro</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">😴</div>
+      <div>Duerme 8 horas</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">📵</div>
+      <div>No revises el celular al despertar</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">🤝</div>
+      <div>Ayuda a alguien que lo necesite</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">🎶</div>
+      <div>Escucha tu música favorita</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">🧘</div>
+      <div>Medita 10 minutos en la mañana</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">📝</div>
+      <div>Escribe 3 cosas por las que estés agradecido</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">📴</div>
+      <div>Toma un descanso sin pantallas por una hora</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">🧠</div>
+      <div>Aprende una nueva habilidad</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">🚶‍♂️</div>
+      <div>Haz una caminata al aire libre</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">🍵</div>
+      <div>Toma té en vez de café</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">🍬</div>
+      <div>No comas azúcar en todo el día</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">📋</div>
+      <div>Escribe tus metas para la semana</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">🌿</div>
+      <div>Cuida una planta</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">🎨</div>
+      <div>Haz una actividad creativa</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">🍽️</div>
+      <div>Come sin prisa</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">🙊</div>
+      <div>Evita decir malas palabras por un día</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">💬</div>
+      <div>Practica afirmaciones positivas</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">⏰</div>
+      <div>No comas después de las 8 pm</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">👚</div>
+      <div>Usa ropa que te haga sentir bien</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">🎁</div>
+      <div>Dona algo que ya no uses</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">🏃‍♂️</div>
+      <div>Haz ejercicio por 20 minutos</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">🛠️</div>
+      <div>Practica una habilidad que ya tengas</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">📄</div>
+      <div>Escribe una lista de cosas que te hagan feliz</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">☀️</div>
+      <div>Toma el sol por 10 minutos</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">🦶</div>
+      <div>Camina descalzo en casa</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">🌙</div>
+      <div>Evita pantallas antes de dormir</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">🍎</div>
+      <div>Come tu fruta favorita</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">🎬</div>
+      <div>Ve una película en otro idioma</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">📰</div>
+      <div>No veas noticias negativas</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">🍱</div>
+      <div>Prueba una comida nueva</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">🧠</div>
+      <div>Anota cómo te sientes hoy</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">🥗</div>
+      <div>Cocina una comida saludable</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">🍔</div>
+      <div>Evita comida chatarra</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">☁️</div>
+      <div>Mira el cielo durante 5 minutos</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">❤️</div>
+      <div>Dile te quiero a alguien</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">📞</div>
+      <div>Llama a un familiar cercano</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">🧼</div>
+      <div>Cuida tu higiene personal</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">🤸</div>
+      <div>Estírate durante 5 minutos</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">👟</div>
+      <div>Haz 10,000 pasos</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">🌳</div>
+      <div>Pasa tiempo en la naturaleza</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">🚭</div>
+      <div>Evita alcohol y tabaco</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">🤍</div>
+      <div>Sé compasivo contigo mismo</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">🏋️</div>
+      <div>Haz ejercicio 3 veces por semana</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">🥦</div>
+      <div>Incluye vegetales en cada comida</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">🥒</div>
+      <div>Prueba una fruta o verdura nueva</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">🫁</div>
+      <div>Haz una pausa de 5 minutos para respirar</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">🌲</div>
+      <div>Camina escuchando sonidos de la naturaleza</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">🖌️</div>
+      <div>Dibuja lo que sientes</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">📴</div>
+      <div>Evita redes sociales todo el día</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">🥤</div>
+      <div>Prepara un batido natural</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">🗑️</div>
+      <div>Recoge basura de tu calle</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">🎼</div>
+      <div>Escucha una canción nueva</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">🗓️</div>
+      <div>Planea tu día mañana</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">🌇</div>
+      <div>Mira un atardecer sin distracciones</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">🔕</div>
+      <div>Desactiva notificaciones por 3 horas</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">💻</div>
+      <div>Haz limpieza digital</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">🍽️</div>
+      <div>Lava los platos con atención plena</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">🍵</div>
+      <div>Prepara una infusión natural</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">💇‍♂️</div>
+      <div>Cepilla tu cabello con calma</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">✉️</div>
+      <div>Escribe una carta que no enviarás</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">🔮</div>
+      <div>Visualiza tu mejor versión</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">📋</div>
+      <div>Haz una lista de afirmaciones</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">🛑</div>
+      <div>Pasa 10 minutos sin hacer nada</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">🧹</div>
+      <div>Ordena tu habitación en silencio</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">🚶</div>
+      <div>Camina en silencio por 15 minutos</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">🏋️‍♀️</div>
+      <div>Haz 15 sentadillas</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">🎵</div>
+      <div>Crea una playlist motivadora</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">🌬️</div>
+      <div>Haz 5 respiraciones conscientes</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">👕</div>
+      <div>Viste de un color que te inspire confianza</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">📵</div>
+      <div>Come sin celular</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">🎨</div>
+      <div>Pinta con tus colores favoritos</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">🧠</div>
+      <div>Elige un hábito y analiza por qué lo haces</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">🎁</div>
+      <div>Ayuda sin esperar nada a cambio</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">🖼️</div>
+      <div>Mira tus fotos favoritas</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">🪞</div>
+      <div>Repite una frase positiva en el espejo</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">🧘‍♂️</div>
+      <div>Haz estiramientos nuevos</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">🚷</div>
+      <div>Evita usar celular caminando</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">😊</div>
+      <div>Sonríe a un desconocido</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">📶</div>
+      <div>Apaga el WiFi una hora antes de dormir</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">🚰</div>
+      <div>Toma agua apenas despiertes</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">📅</div>
+      <div>Organiza tu semana</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">🧸</div>
+      <div>Haz algo que amabas de niño</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">🛋️</div>
+      <div>Tómate una tarde libre</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">👂</div>
+      <div>Escucha solo el ambiente por 10 minutos</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">🙊</div>
+      <div>No interrumpas al conversar</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">🔟</div>
+      <div>Cuenta hasta 10 si algo te molesta</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">🥗</div>
+      <div>Prepara una cena saludable</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">🙏</div>
+      <div>Recita una frase de gratitud</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">🛏️</div>
+      <div>Haz tu cama</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">🏆</div>
+      <div>Escribe tus logros personales</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">🦷</div>
+      <div>Mastica cada bocado 15 veces</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">🧍‍♀️</div>
+      <div>Corrige tu postura</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">👁️‍🗨️</div>
+      <div>Cierra los ojos y escucha</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">👖</div>
+      <div>Usa ropa cómoda</div>
+    </div>
+<div class="card" onclick="toggleCheck(this)">
+      <div class="emoji">📴</div>
+      <div>Apaga el celular 1 hora</div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="motivationalModal">
+  <div class="modal-content">
+    <p id="motivationalText"></p>
+  </div>
+</div>
+
+<script>
+const frases = [
+  "¡Lo estás haciendo increíble, sigue así!",
+  "¡Un paso más cerca de tu mejor versión!",
+  "¡Hoy ganaste tú, no la flojera!",
+  "¡Cada reto cuenta, y tú los estás venciendo!",
+  "¡Tu constancia es tu superpoder!",
+  "¡Orgulloso de ti, no pares!",
+  "¡Hoy hiciste que valiera la pena!",
+  "¡Estás creando un gran hábito!",
+  "¡Tú puedes con esto y más!"
+];
+
+let completados = 0;
+const progress = document.getElementById("progress");
+const modal = document.getElementById("motivationalModal");
+const modalText = document.getElementById("motivationalText");
+
+function toggleCheck(card) {
+  if (!card.classList.contains("checked")) {
+    if (completados >= 5) return;
+    card.classList.add("checked");
+    completados++;
+  } else {
+    card.classList.remove("checked");
+    completados--;
+  }
+
+  progress.style.width = (completados / 5 * 100) + "%";
+
+  if (completados === 5) {
+    const frase = frases[Math.floor(Math.random() * frases.length)];
+    modalText.textContent = frase;
+    modal.style.display = "flex";
+    setTimeout(() => {
+      modal.style.display = "none";
+      window.location.href = "index.html";
+    }, 3000);
+  }
+}
+</script>
+</body>
+</html>
