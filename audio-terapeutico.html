@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CalmaMind - Audio Terapéutico</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: url('fondo.png') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+      overflow-x: hidden;
+    }
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+    }
+    .brand {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+    .btn-inicio {
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 1.5rem;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+    .hero {
+      text-align: center;
+      margin-top: 3rem;
+    }
+    .hero h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+    .hero p {
+      font-size: 1.2rem;
+      margin: 0 1rem;
+    }
+    .icon-container {
+      display: flex;
+      justify-content: center;
+      margin: 2rem 0;
+    }
+    .icon-container .circle {
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+    }
+    .cards {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+      padding: 2rem;
+    }
+    .card {
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      text-align: center;
+      color: white;
+      width: 150px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      backdrop-filter: blur(4px);
+    }
+    .card .emoji {
+      font-size: 3rem;
+      margin-bottom: 0.5rem;
+    }
+    .card .label {
+      font-weight: bold;
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+    }
+    .card button {
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      border-radius: 50%;
+      color: white;
+      width: 50px;
+      height: 50px;
+      font-size: 1.5rem;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+    @media (max-width: 768px) {
+      .cards {
+        gap: 1rem;
+      }
+      .card {
+        width: 120px;
+        padding: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-bar">
+    <div class="brand">CalmaMind</div>
+    <button class="btn-inicio" onclick="stopAllAndGoHome()">Inicio</button>
+  </div>
+
+  <div class="hero">
+    <h1>Audio Terapéutico</h1>
+    <p>Sesiones guiadas para ayudarte a encontrar paz<br />y equilibrio.</p>
+  </div>
+
+  <div class="icon-container">
+    <div class="circle">🎧</div>
+  </div>
+
+  <div class="cards">
+    <div class="card">
+      <div class="emoji">🧘‍♀️</div>
+      <div class="label">Ansiedad</div>
+      <button>▶️</button>
+      <audio src="ansiedad.mp3"></audio>
+    </div>
+    <div class="card">
+      <div class="emoji">🌙⭐</div>
+      <div class="label">Dormir</div>
+      <button>▶️</button>
+      <audio src="dormir.mp3"></audio>
+    </div>
+    <div class="card">
+      <div class="emoji">☀️</div>
+      <div class="label">ACTITUD<br>POSITIVA</div>
+      <button>▶️</button>
+      <audio src="positiva.mp3"></audio>
+    </div>
+    <div class="card">
+      <div class="emoji">☁️💧</div>
+      <div class="label">Calma</div>
+      <button>▶️</button>
+      <audio src="calma.mp3"></audio>
+    </div>
+    <div class="card">
+      <div class="emoji">❤️⚕️</div>
+      <div class="label">Estrés</div>
+      <button>▶️</button>
+      <audio src="estres.mp3"></audio>
+    </div>
+  </div>
+
+  <script>
+    let currentAudio = null;
+
+    document.querySelectorAll(".card").forEach(card => {
+      const button = card.querySelector("button");
+      const audio = card.querySelector("audio");
+
+      // Evita comportamientos raros de botones en algunos navegadores
+      button.setAttribute("type", "button");
+
+      // Aseguramos limpiar estado global cuando este audio se pausa o termina
+      audio.addEventListener("pause", () => {
+        if (currentAudio === audio && audio.paused) {
+          currentAudio = null;
+        }
+      });
+
+      audio.addEventListener("ended", () => {
+        if (currentAudio === audio) currentAudio = null;
+      });
+
+      button.addEventListener("click", async () => {
+        // Si hay otro audio sonando y es distinto, deténlo y reinícialo
+        if (currentAudio && currentAudio !== audio) {
+          currentAudio.pause();
+          currentAudio.currentTime = 0;
+        }
+
+        // Alternar reproducción/pausa en el mismo botón
+        if (audio.paused) {
+          try {
+            await audio.play();
+            currentAudio = audio;
+          } catch (e) {
+            // Silencioso: a veces el navegador bloquea la reproducción sin interacción válida
+            console.error(e);
+          }
+        } else {
+          audio.pause(); // pausa sin reiniciar el tiempo
+          // currentAudio se limpia en el evento 'pause'
+        }
+      });
+    });
+
+    function stopAllAndGoHome() {
+      document.querySelectorAll("audio").forEach(audio => {
+        audio.pause();
+        audio.currentTime = 0;
+      });
+      currentAudio = null;
+      window.location.href = "index.html";
+    }
+  </script>
+</body>
+</html>

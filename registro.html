@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Crear Cuenta - CalmaMind</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #f4f0fa;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      padding: 1rem;
+    }
+
+    .container {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    h2 {
+      color: #5c3ca4;
+      margin-bottom: 1.5rem;
+      font-size: 1.8rem;
+    }
+
+    input {
+      width: 100%;
+      padding: 0.8rem;
+      margin-bottom: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      box-sizing: border-box;
+      font-size: 1rem;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 0.8rem;
+      background: #5c3ca4;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-bottom: 0.5rem;
+    }
+
+    .btn-secondary {
+      background: #ccc;
+      color: #000;
+    }
+
+    p {
+      margin-top: 1rem;
+      font-size: 0.95rem;
+    }
+
+    a.link {
+      color: #5c3ca4;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    @media (max-width: 400px) {
+      h2 {
+        font-size: 1.5rem;
+      }
+      input, .btn {
+        font-size: 0.95rem;
+        padding: 0.7rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Crear Cuenta</h2>
+    <form onsubmit="registrarUsuario(); return false;">
+      <input type="text" id="nombre" placeholder="Nombre" required />
+      <input type="email" id="email" placeholder="Correo electrónico" required />
+      <input type="password" id="password" placeholder="Contraseña" required />
+      <button type="submit" class="btn">Registrarse</button>
+    </form>
+    <button class="btn btn-secondary" onclick="location.href='index.html'">Volver al inicio</button>
+    <p>¿Ya tienes cuenta? <a class="link" href="login.html">Iniciar sesión</a></p>
+  </div>
+
+  <script>
+    async function registrarUsuario() {
+      const nombre = document.getElementById('nombre').value.trim();
+      const email = document.getElementById('email').value.trim().toLowerCase();
+      const password = document.getElementById('password').value;
+
+      if (!nombre || !email || !password) {
+        alert('Completa todos los campos.');
+        return;
+      }
+
+      try {
+        const res = await fetch('http://localhost:3000/api/registro', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ nombre, email, password })
+        });
+
+        if (res.ok) {
+          alert('Cuenta creada con éxito. Ahora puedes iniciar sesión.');
+          window.location.href = 'login.html';
+        } else {
+          const data = await res.json();
+          alert(data.error || 'Error al registrar.');
+        }
+      } catch (error) {
+        alert('No se pudo conectar al servidor.');
+        console.error(error);
+      }
+    }
+  </script>
+</body>
+</html>

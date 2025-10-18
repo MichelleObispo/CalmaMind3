@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Consejo del Día</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom right, #eeecfb, #e7effd);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .card {
+      background: white;
+      border-radius: 16px;
+      padding: 2rem;
+      max-width: 500px;
+      width: 90%;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    .emoji {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      animation: bounce 1s infinite alternate;
+    }
+
+    @keyframes bounce {
+      to { transform: translateY(-5px); }
+    }
+
+    h1 {
+      font-size: 1.6rem;
+      color: #5c3ca4;
+      margin-bottom: 0.5rem;
+    }
+
+    p {
+      color: #333;
+      font-size: 1.1rem;
+      margin-bottom: 1.5rem;
+      line-height: 1.5;
+    }
+
+    .btn {
+      background: #5c3ca4;
+      color: white;
+      padding: 0.7rem 1.2rem;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .btn:hover { background: #472d89; }
+
+    @media (max-width: 480px) {
+      h1 { font-size: 1.3rem; }
+      p  { font-size: 1rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="emoji">💡</div>
+    <h1>Consejo del Día</h1>
+    <p id="consejo">Cargando...</p>
+    <button class="btn" onclick="window.location.href='index.html'">Volver al inicio</button>
+  </div>
+
+  <script>
+    const CONSEJOS = [
+      "🌅 Cada día es una nueva oportunidad para empezar de nuevo.",
+      "🔥 Cree en ti, incluso cuando nadie más lo haga.",
+      "🌱 Las grandes cosas toman tiempo, sé paciente con tu proceso.",
+      "☀️ No esperes el momento perfecto, haz que el momento sea perfecto.",
+      "💪 No tienes que ser el mejor, solo mejor que ayer.",
+      "🧠 Tu mente es poderosa, aliméntala con pensamientos positivos.",
+      "🚀 Da el primer paso, aunque no veas el camino completo.",
+      "🌈 Después de la tormenta siempre llega el arcoíris.",
+      "✨ Eres más fuerte de lo que imaginas.",
+      "🏆 Los sueños no funcionan si tú no trabajas por ellos.",
+      "🌻 Lo que piensas, creas. Lo que sientes, atraes. Lo que imaginas, construyes.",
+      "🔥 No pares cuando estés cansado, para cuando hayas terminado.",
+      "💫 Cada pequeño avance cuenta, incluso cuando no se nota.",
+      "🌙 Aun en la oscuridad, las estrellas siguen brillando.",
+      "💎 No temas brillar, el mundo necesita tu luz.",
+      "🎯 Concéntrate en lo que puedes controlar y deja ir lo demás.",
+      "🦋 El cambio es la prueba de que estás creciendo.",
+      "🌊 Sé como el mar: tranquilo pero poderoso.",
+      "❤️ Rodéate de lo que te inspire a ser mejor.",
+      "🕊️ La calma es una superpotencia. Aprende a usarla.",
+      "🌄 Si puedes soñarlo, puedes hacerlo realidad.",
+      "💥 Cada error es una lección disfrazada.",
+      "💖 Eres suficiente, exactamente como eres.",
+      "🌟 Nunca es tarde para reinventarte.",
+      "🏁 No mires cuánto falta, mira cuánto has avanzado.",
+      "🎶 Lo que hoy parece difícil, mañana será parte de tu historia.",
+      "💭 Todo comienza con un pensamiento positivo.",
+      "🎈 No cargues con lo que no te deja volar.",
+      "🔥 La disciplina vence al talento cuando el talento no se esfuerza.",
+      "🌤️ Levántate, respira y agradece: ya estás ganando.",
+      "🧭 No pierdas el rumbo, incluso si el camino cambia.",
+      "💬 Habla contigo como hablarías con alguien que amas.",
+      "🪴 Crecer duele, pero quedarse igual duele más.",
+      "💡 Las ideas valen más cuando las haces realidad.",
+      "💪 No subestimes el poder de empezar hoy.",
+      "🏔️ La cima se alcanza paso a paso, no de un salto.",
+      "🕰️ Lo que haces ahora determinará lo que coseches mañana.",
+      "🌻 A veces el progreso se siente como caos, pero es crecimiento.",
+      "🔥 Cree más en tus sueños que en tus miedos.",
+      "🧘‍♂️ La paz no se encuentra, se construye cada día.",
+      "💬 Sonríe: es gratis y cambia el ambiente.",
+      "🦅 No temas volar alto, aunque el viento sople fuerte.",
+      "🌙 Cierra el día sabiendo que diste tu mejor versión.",
+      "🏃‍♀️ No te detengas, cada paso te acerca a tu meta.",
+      "💫 Rodéate de energía que te eleve, no que te drene.",
+      "🌄 Lo difícil de hoy será tu orgullo mañana.",
+      "⚡ Sé la energía que quieres atraer.",
+      "🎇 Haz que cada día cuente, incluso los tranquilos.",
+      "🌺 No compitas, florece a tu propio ritmo.",
+      "🔥 Tu historia apenas comienza, y será increíble."
+    ];
+
+    const STORAGE_KEY_ORDER = "ordenConsejos_v2";
+    const STORAGE_KEY_INDEX = "indiceConsejo_v2";
+
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+
+    function cargarConsejoDelDia() {
+      let orden = JSON.parse(localStorage.getItem(STORAGE_KEY_ORDER) || "null");
+      let idx = parseInt(localStorage.getItem(STORAGE_KEY_INDEX) || "0", 10);
+
+      if (!Array.isArray(orden) || orden.length !== CONSEJOS.length) {
+        orden = shuffle([...Array(CONSEJOS.length).keys()]);
+        idx = 0;
+      }
+
+      const consejo = CONSEJOS[orden[idx]];
+      document.getElementById("consejo").textContent = consejo;
+
+      idx = (idx + 1) % CONSEJOS.length;
+
+      localStorage.setItem(STORAGE_KEY_ORDER, JSON.stringify(orden));
+      localStorage.setItem(STORAGE_KEY_INDEX, String(idx));
+    }
+
+    document.addEventListener("DOMContentLoaded", cargarConsejoDelDia);
+  </script>
+</body>
+</html>

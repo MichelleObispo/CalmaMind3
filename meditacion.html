@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zen | CalmaMind</title>
+  <link rel="icon" href="favicon-relax.ico">
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      font-family: 'Segoe UI', sans-serif;
+      background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+      color: white;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    .stars {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .star {
+      position: absolute;
+      background: white;
+      width: 2px;
+      height: 2px;
+      border-radius: 50%;
+      opacity: 0.8;
+      animation: fall linear infinite;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(-100%); opacity: 0; }
+      50% { opacity: 1; }
+      100% { transform: translateY(100vh); opacity: 0; }
+    }
+
+    .quote {
+      font-size: 1.6rem;
+      max-width: 80%;
+      text-align: center;
+      margin-bottom: 1rem;
+      animation: fadeIn 2s ease-in-out;
+      z-index: 1;
+      transition: opacity 0.5s;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .transparent-button {
+      position: absolute;
+      background: transparent;
+      border: none;
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 999px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .transparent-button:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    #audio-control {
+      top: 20px;
+      right: 20px;
+    }
+
+    #home-button {
+      top: 20px;
+      left: 20px;
+    }
+
+    @media (max-width: 600px) {
+      .quote {
+        font-size: 1.2rem;
+        padding: 0 1rem;
+      }
+      .transparent-button {
+        font-size: 0.9rem;
+        padding: 0.4rem 0.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <script>
+    // Validación de acceso
+    fetch("/api/validar-acceso")
+      .then(res => res.json())
+      .then(data => {
+        if (!data.acceso) {
+          alert("Debes haber iniciado sesión y tener un pago aprobado para acceder.");
+          window.location.href = "/index.html";
+        }
+      });
+  </script>
+
+  <audio id="bg-music" src="respiracion.mp3" loop></audio>
+
+  <button id="audio-control" class="transparent-button">Reproducir música</button>
+  <button id="home-button" class="transparent-button">Inicio</button>
+
+  <div class="quote" id="quote">Respira profundo. Estás a salvo aquí.</div>
+  <canvas class="stars"></canvas>
+
+  <script>
+    const frases = [
+      "Respira profundo, estás aquí y ahora.",
+      "Permítete un momento de calma.",
+      "La ansiedad es solo una sensación, no una realidad.",
+      "Todo pasará, como siempre ha pasado.",
+      "Eres más fuerte que tus pensamientos.",
+      "Un respiro a la vez.",
+      "Deja ir lo que no puedes controlar.",
+      "Cada pequeño paso cuenta",
+      "El presente es tu refugio seguro",
+      "Confía en tu capacidad para superar esto.",
+      "Tu mente merece paz.",
+      "Tómate un momento para ti.",
+      "Relájate, suelta la tensión.",
+      "Este momento es solo un capítulo, no toda la historia.",
+      "Está bien no estar bien, date permiso para sentir.",
+      "No estás solo en esto.",
+      "La tormenta también pasará, confía.",
+      "No tienes que tener todas las respuestas ahora.",
+      "Cada día es una nueva oportunidad para empezar de nuevo.",
+      "El dolor es real, pero también lo es tu capacidad para sanar.",
+      "Tu valor no se mide por tus días difíciles.",
+      "Respira, siente el aire que te sostiene.",
+      "Mereces momentos de paz, hoy y siempre."
+    ];
+
+    let index = 0;
+    setInterval(() => {
+      index = (index + 1) % frases.length;
+      const quote = document.getElementById('quote');
+      quote.style.opacity = 0;
+      setTimeout(() => {
+        quote.textContent = frases[index];
+        quote.style.opacity = 1;
+      }, 1000);
+    }, 8000);
+
+    const audio = document.getElementById('bg-music');
+    const controlBtn = document.getElementById('audio-control');
+    let musicStarted = false;
+
+    controlBtn.addEventListener('click', () => {
+      if (!musicStarted) {
+        audio.play();
+        musicStarted = true;
+        controlBtn.textContent = 'Pausar música';
+      } else if (audio.paused) {
+        audio.play();
+        controlBtn.textContent = 'Pausar música';
+      } else {
+        audio.pause();
+        controlBtn.textContent = 'Reproducir música';
+      }
+    });
+
+    document.getElementById('home-button').addEventListener('click', () => {
+      window.location.href = 'index.html';
+    });
+
+    const canvas = document.querySelector('.stars');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    function createStars(count = 80) {
+      return Array.from({ length: count }, () => ({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        radius: Math.random() * 1.5 + 0.5,
+        speed: Math.random() * 0.8 + 0.2
+      }));
+    }
+
+    let stars = createStars();
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let star of stars) {
+        ctx.beginPath();
+        ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+        ctx.fillStyle = 'white';
+        ctx.fill();
+        star.y += star.speed;
+        if (star.y > canvas.height) star.y = 0;
+      }
+      requestAnimationFrame(animate);
+    }
+    animate();
+  </script>
+</body>
+</html>

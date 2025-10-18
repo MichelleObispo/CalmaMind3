@@ -1,0 +1,445 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Insignias CalmaMind</title>
+  <style>
+
+
+
+    body { margin: 0; font-family: 'Segoe UI', sans-serif; background: linear-gradient(to bottom right, #fdfbfb, #ebedee); }
+    header { background-color: #5c3ca4; color: white; text-align: center; padding: 1.5rem; }
+    .container { max-width: 1400px; margin: auto; padding: 2rem; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1.5rem; }
+    .insignia { border-radius: 16px; border: 2px solid #f5d742; text-align: center; padding: 1rem; box-shadow: 0 4px 8px rgba(0,0,0,0.1); transition: transform 0.3s; position: relative; color: #333; display: flex; flex-direction: column; justify-content: center; }
+    .insignia:hover { transform: scale(1.04); }
+    .insignia .emoji { font-size: 2rem; margin-bottom: 0.6rem; line-height: 1.2; }
+    .tooltip { position: absolute; bottom: 110%; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.85); color: white; font-size: 0.7rem; padding: 6px 10px; border-radius: 6px; opacity: 0; pointer-events: none; transition: 0.2s; white-space: nowrap; z-index: 2; }
+    .insignia:hover .tooltip { opacity: 1; }
+    .locked { filter: grayscale(100%) brightness(0.7); position: relative; }
+    .locked .emoji { opacity: 0.5; }
+    .locked::after { content: "🔒"; position: absolute; top: 8px; right: 10px; font-size: 1.2rem; }
+    .boton-volver { text-align: center; margin: 2rem; }
+    .boton-volver a { padding: 0.8rem 1.6rem; background-color: #5c3ca4; color: white; border-radius: 8px; text-decoration: none; font-weight: bold; }
+  </style>
+</head>
+<script>
+  // Quita la clase "locked" de todas las insignias
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.insignia.locked').forEach(function(el) {
+      el.classList.remove('locked');
+    });
+  });
+</script>
+
+<body>
+<script>
+fetch("/api/validar-acceso")
+  .then(res => res.json())
+  .then(data => {
+    if (!data.acceso) {
+      alert("Debes haber iniciado sesión y tener un pago aprobado para acceder.");
+      window.location.href = "index.html";
+    }
+  });
+</script>
+<header>
+  <h1>Insignias de CalmaMind</h1>
+  <p>Más de 60 logros únicos relacionados con los retos reales</p>
+</header>
+<div class="container">
+  <div class="grid">
+
+    <div class="insignia locked" style="background: linear-gradient(135deg, hsl(0, 100%, 90%), hsl(40, 90%, 80%));">
+      <div class="tooltip">Beber 2 litros de agua durante 14 días</div>
+      <div class="emoji">💧</div>
+      <h3>Maestro del Agua</h3>
+    </div>
+    
+    <div class="insignia locked" style="background: linear-gradient(135deg, hsl(10, 100%, 90%), hsl(50, 90%, 80%));">
+      <div class="tooltip">Meditar 10 minutos por la mañana durante 7 días</div>
+      <div class="emoji">🧘</div>
+      <h3>Racha Zen</h3>
+    </div>
+    
+    <div class="insignia locked" style="background: linear-gradient(135deg, hsl(20, 100%, 90%), hsl(60, 90%, 80%));">
+      <div class="tooltip">Evitar el azúcar durante 3 días</div>
+      <div class="emoji">🍬🚫</div>
+      <h3>Dulces Fuera</h3>
+    </div>
+    
+    <div class="insignia locked" style="background: linear-gradient(135deg, hsl(30, 100%, 90%), hsl(70, 90%, 80%));">
+      <div class="tooltip">Dormir al menos 8 horas por 7 noches</div>
+      <div class="emoji">🛏️</div>
+      <h3>Sueño Completo</h3>
+    </div>
+    
+    <div class="insignia locked" style="background: linear-gradient(135deg, hsl(40, 100%, 90%), hsl(80, 90%, 80%));">
+      <div class="tooltip">Leer 10 páginas cada día durante 5 días</div>
+      <div class="emoji">📚</div>
+      <h3>Lectura Constante</h3>
+    </div>
+    
+    <div class="insignia locked" style="background: linear-gradient(135deg, hsl(50, 100%, 90%), hsl(90, 90%, 80%));">
+      <div class="tooltip">No usar pantallas 1h antes de dormir por 4 días</div>
+      <div class="emoji">📵</div>
+      <h3>Sin Pantallas</h3>
+    </div>
+    
+    <div class="insignia locked" style="background: linear-gradient(135deg, hsl(60, 100%, 90%), hsl(100, 90%, 80%));">
+      <div class="tooltip">Caminar descalzo durante 5 días</div>
+      <div class="emoji">🦶</div>
+      <h3>Pies en Tierra</h3>
+    </div>
+    
+    <div class="insignia locked" style="background: linear-gradient(135deg, hsl(70, 100%, 90%), hsl(110, 90%, 80%));">
+      <div class="tooltip">Comer fruta todos los días durante una semana</div>
+      <div class="emoji">🍎</div>
+      <h3>Fruta Diaria</h3>
+    </div>
+    
+    <div class="insignia locked" style="background: linear-gradient(135deg, hsl(80, 100%, 90%), hsl(120, 90%, 80%));">
+      <div class="tooltip">Evitar el celular al despertar 3 días seguidos</div>
+      <div class="emoji">📴</div>
+      <h3>Pausa Digital</h3>
+    </div>
+    
+    <div class="insignia locked" style="background: linear-gradient(135deg, hsl(90, 100%, 90%), hsl(130, 90%, 80%));">
+      <div class="tooltip">Realizar 5 respiraciones profundas por 7 días</div>
+      <div class="emoji">🌬️</div>
+      <h3>Respira Hondo</h3>
+    </div>
+    
+    <div class="insignia locked" style="background: linear-gradient(135deg, hsl(100, 100%, 90%), hsl(140, 90%, 80%));">
+      <div class="tooltip">Escribir 3 cosas positivas cada día durante 5 días</div>
+      <div class="emoji">🙏</div>
+      <h3>Agradecido</h3>
+    </div>
+    
+    <div class="insignia locked" style="background: linear-gradient(135deg, hsl(110, 100%, 90%), hsl(150, 90%, 80%));">
+      <div class="tooltip">Visualizar tu día durante 5 días</div>
+      <div class="emoji">🌄</div>
+      <h3>Mente Clara</h3>
+    </div>
+    
+    <div class="insignia locked" style="background: linear-gradient(135deg, hsl(120, 100%, 90%), hsl(160, 90%, 80%));">
+      <div class="tooltip">Resolver un reto mental cada día por 3 días</div>
+      <div class="emoji">🧠</div>
+      <h3>Reto Mental</h3>
+    </div>
+    
+    <div class="insignia locked" style="background: linear-gradient(135deg, hsl(130, 100%, 90%), hsl(170, 90%, 80%));">
+      <div class="tooltip">Evitar quejarse durante 2 días</div>
+      <div class="emoji">😊</div>
+      <h3>Actitud Positiva</h3>
+    </div>
+    
+    <div class="insignia locked" style="background: linear-gradient(135deg, hsl(140, 100%, 90%), hsl(180, 90%, 80%));">
+      <div class="tooltip">Repetir un reto durante 21 días seguidos</div>
+      <div class="emoji">🔁</div>
+      <h3>Hábito Formado</h3>
+    </div>
+    
+    <div class="insignia locked" style="background: linear-gradient(135deg, hsl(150, 100%, 90%), hsl(190, 90%, 80%));">
+      <div class="tooltip">Guardar silencio consciente durante 10 min</div>
+      <div class="emoji">🤫</div>
+      <h3>Silencio Interno</h3>
+    </div>
+    
+    <div class="insignia locked" style="background: linear-gradient(135deg, hsl(160, 100%, 90%), hsl(200, 90%, 80%));">
+      <div class="tooltip">Salir al sol 10 minutos por 5 días</div>
+      <div class="emoji">☀️</div>
+      <h3>Contacto Natural</h3>
+    </div>
+    
+    <div class="insignia locked" style="background: linear-gradient(135deg, hsl(170, 100%, 90%), hsl(210, 90%, 80%));">
+      <div class="tooltip">Evitar la cafeína durante 2 días</div>
+      <div class="emoji">☕🚫</div>
+      <h3>Café Detox</h3>
+    </div>
+    
+    <div class="insignia locked" style="background: linear-gradient(135deg, hsl(180, 100%, 90%), hsl(220, 90%, 80%));">
+      <div class="tooltip">Escribir un objetivo cada mañana por 5 días</div>
+      <div class="emoji">🎯</div>
+      <h3>Objetivo Diario</h3>
+    </div>
+    
+    <div class="insignia locked" style="background: linear-gradient(135deg, hsl(190, 100%, 90%), hsl(230, 90%, 80%));">
+      <div class="tooltip">Hacer ejercicio al menos 20 minutos por 7 días</div>
+      <div class="emoji">🏃</div>
+      <h3>Ejercicio Diario</h3>
+    </div>
+    
+    <div class="insignia locked" style="background: linear-gradient(135deg, hsl(200, 100%, 90%), hsl(240, 90%, 80%));">
+      <div class="tooltip">Escuchar un podcast saludable cada día</div>
+      <div class="emoji">🎧</div>
+      <h3>Podcast Diario</h3>
+    </div>
+    
+    <div class="insignia locked" style="background: linear-gradient(135deg, hsl(210, 100%, 90%), hsl(250, 90%, 80%));">
+      <div class="tooltip">Probar 10 retos diferentes</div>
+      <div class="emoji">🧭</div>
+      <h3>Explorador de Hábitos</h3>
+    </div>
+    
+    <div class="insignia locked" style="background: linear-gradient(135deg, hsl(220, 100%, 90%), hsl(260, 90%, 80%));">
+      <div class="tooltip">Ayudar a alguien cada día por 3 días</div>
+      <div class="emoji">🤝</div>
+      <h3>Buena Acción</h3>
+    </div>
+    
+    <div class="insignia locked" style="background: linear-gradient(135deg, hsl(230, 100%, 90%), hsl(270, 90%, 80%));">
+      <div class="tooltip">Evitar leer noticias negativas 3 días</div>
+      <div class="emoji">📰🚫</div>
+      <h3>Sin Noticias</h3>
+    </div>
+    
+    <div class="insignia locked" style="background: linear-gradient(135deg, hsl(240, 100%, 90%), hsl(280, 90%, 80%));">
+      <div class="tooltip">Dibujar o colorear durante 3 días</div>
+      <div class="emoji">🎨</div>
+      <h3>Creador Creativo</h3>
+    </div>
+    
+    <div class="insignia locked" style="background: linear-gradient(135deg, hsl(250, 100%, 90%), hsl(290, 90%, 80%));">
+      <div class="tooltip">Escribir un diario cada noche por 5 días</div>
+      <div class="emoji">📓</div>
+      <h3>Diario Personal</h3>
+    </div>
+    
+    <div class="insignia locked" style="background: linear-gradient(135deg, hsl(260, 100%, 90%), hsl(300, 90%, 80%));">
+      <div class="tooltip">Organizar tareas al menos 3 días</div>
+      <div class="emoji">📅</div>
+      <h3>Planificador</h3>
+    </div>
+    
+    <div class="insignia locked" style="background: linear-gradient(135deg, hsl(270, 100%, 90%), hsl(310, 90%, 80%));">
+      <div class="tooltip">Pasar 1 tarde sin tecnología</div>
+      <div class="emoji">📴</div>
+      <h3>Mente Offline</h3>
+    </div>
+    
+    <div class="insignia locked" style="background: linear-gradient(135deg, hsl(280, 100%, 90%), hsl(320, 90%, 80%));">
+      <div class="tooltip">Sustituir café por té durante 2 días</div>
+      <div class="emoji">🍵</div>
+      <h3>Té No Café</h3>
+    </div>
+    
+    <div class="insignia locked" style="background: linear-gradient(135deg, hsl(290, 100%, 90%), hsl(330, 90%, 80%));">
+      <div class="tooltip">Hacer estiramientos por 7 días</div>
+      <div class="emoji">🤸‍♂️</div>
+      <h3>Estiramiento Diario</h3>
+    </div>
+    
+    <div class="insignia locked" style="background: linear-gradient(135deg, hsl(300, 100%, 90%), hsl(340, 90%, 80%));">
+      <div class="tooltip">No comer comida chatarra por 2 días</div>
+      <div class="emoji">🍔🚫</div>
+      <h3>Cero Chatarra</h3>
+    </div>
+    
+    <div class="insignia locked" style="background: linear-gradient(135deg, hsl(310, 100%, 90%), hsl(350, 90%, 80%));">
+      <div class="tooltip">Cocinar algo saludable nuevo</div>
+      <div class="emoji">🥗</div>
+      <h3>Nueva Receta</h3>
+    </div>
+    
+    <div class="insignia locked" style="background: linear-gradient(135deg, hsl(320, 100%, 90%), hsl(0, 90%, 80%));">
+      <div class="tooltip">Realizar una actividad creativa diaria</div>
+      <div class="emoji">🖌️</div>
+      <h3>Hora Creativa</h3>
+    </div>
+    
+    <div class="insignia locked" style="background: linear-gradient(135deg, hsl(330, 100%, 90%), hsl(10, 90%, 80%));">
+      <div class="tooltip">Llamar o hablar con un familiar</div>
+      <div class="emoji">📞</div>
+      <h3>Conexión Familiar</h3>
+    </div>
+    
+    <div class="insignia locked" style="background: linear-gradient(135deg, hsl(340, 100%, 90%), hsl(20, 90%, 80%));">
+      <div class="tooltip">Hacer 3 retos distintos el mismo día</div>
+      <div class="emoji">🔁🔁🔁</div>
+      <h3>Reto Triple</h3>
+    </div>
+    
+    <div class="insignia locked" style="background: linear-gradient(135deg, hsl(350, 100%, 90%), hsl(30, 90%, 80%));">
+      <div class="tooltip">Reflexionar al final del día 5 veces</div>
+      <div class="emoji">📝</div>
+      <h3>Reflexión Nocturna</h3>
+    </div>
+    
+    <div class="insignia locked" style="background: linear-gradient(135deg, hsl(0, 100%, 90%), hsl(40, 90%, 80%));">
+      <div class="tooltip">Buscar una frase motivadora diaria</div>
+      <div class="emoji">✨</div>
+      <h3>Inspiración Diaria</h3>
+    </div>
+    
+    <div class="insignia locked" style="background: linear-gradient(135deg, hsl(10, 100%, 90%), hsl(50, 90%, 80%));">
+      <div class="tooltip">Visualizar tus metas cada mañana</div>
+      <div class="emoji">👁️</div>
+      <h3>Visualiza Logros</h3>
+    </div>
+    
+    <div class="insignia locked" style="background: linear-gradient(135deg, hsl(20, 100%, 90%), hsl(60, 90%, 80%));">
+      <div class="tooltip">Hablar desde la empatía 3 veces</div>
+      <div class="emoji">💬❤️</div>
+      <h3>Empatía Activa</h3>
+    </div>
+    
+    <div class="insignia locked" style="background: linear-gradient(135deg, hsl(30, 100%, 90%), hsl(70, 90%, 80%));">
+      <div class="tooltip">Darte 30 minutos diarios solo para ti</div>
+      <div class="emoji">🛀</div>
+      <h3>Tiempo para Ti</h3>
+    </div>
+    
+    <div class="insignia locked" style="background: linear-gradient(135deg, hsl(40, 100%, 90%), hsl(80, 90%, 80%));">
+      <div class="tooltip">Seguir tu rutina por 10 días</div>
+      <div class="emoji">🗓️</div>
+      <h3>Rutina Constante</h3>
+    </div>
+    
+    <div class="insignia locked" style="background: linear-gradient(135deg, hsl(50, 100%, 90%), hsl(90, 90%, 80%));">
+      <div class="tooltip">Reflexionar sobre emociones 5 veces</div>
+      <div class="emoji">🧠</div>
+      <h3>Chequeo Emocional</h3>
+    </div>
+    
+    <div class="insignia locked" style="background: linear-gradient(135deg, hsl(60, 100%, 90%), hsl(100, 90%, 80%));">
+      <div class="tooltip">Definir metas cada domingo</div>
+      <div class="emoji">📋</div>
+      <h3>Metas Claras</h3>
+    </div>
+    
+    <div class="insignia locked" style="background: linear-gradient(135deg, hsl(70, 100%, 90%), hsl(110, 90%, 80%));">
+      <div class="tooltip">Premiarte por completar una semana</div>
+      <div class="emoji">🎁</div>
+      <h3>Recompensa Saludable</h3>
+    </div>
+    
+    <div class="insignia locked" style="background: linear-gradient(135deg, hsl(80, 100%, 90%), hsl(120, 90%, 80%));">
+      <div class="tooltip">Hacer 5 sesiones guiadas</div>
+      <div class="emoji">🔊🧘</div>
+      <h3>Meditación Guiada</h3>
+    </div>
+    
+    <div class="insignia locked" style="background: linear-gradient(135deg, hsl(90, 100%, 90%), hsl(130, 90%, 80%));">
+      <div class="tooltip">Finalizar tareas pendientes 3 veces</div>
+      <div class="emoji">✅</div>
+      <h3>Cierre de Ciclos</h3>
+    </div>
+    
+    <div class="insignia locked" style="background: linear-gradient(135deg, hsl(100, 100%, 90%), hsl(140, 90%, 80%));">
+      <div class="tooltip">Respirar profundamente al sentir ansiedad</div>
+      <div class="emoji">😌</div>
+      <h3>Anti-Ansiedad</h3>
+    </div>
+    
+    <div class="insignia locked" style="background: linear-gradient(135deg, hsl(110, 100%, 90%), hsl(150, 90%, 80%));">
+      <div class="tooltip">Completar 60 retos diferentes</div>
+      <div class="emoji">👑</div>
+      <h3>Maestría del Reto</h3>
+    </div>
+    
+    <div class="insignia locked" style="background: linear-gradient(135deg, hsl(120, 100%, 90%), hsl(160, 90%, 80%));">
+      <div class="tooltip">Constancia durante 21 días</div>
+      <div class="emoji">🦾</div>
+      <h3>Voluntad de Hierro</h3>
+    </div>
+    
+    <div class="insignia locked" style="background: linear-gradient(135deg, hsl(130, 100%, 90%), hsl(170, 90%, 80%));">
+      <div class="tooltip">Pasar tiempo en la naturaleza 5 veces</div>
+      <div class="emoji">🌳</div>
+      <h3>Explorador Natural</h3>
+    </div>
+    
+    <div class="insignia locked" style="background: linear-gradient(135deg, hsl(140, 100%, 90%), hsl(180, 90%, 80%));">
+      <div class="tooltip">Escuchar música relajante diaria</div>
+      <div class="emoji">🎼</div>
+      <h3>Creador de Paz</h3>
+    </div>
+    
+    <div class="insignia locked" style="background: linear-gradient(135deg, hsl(150, 100%, 90%), hsl(190, 90%, 80%));">
+      <div class="tooltip">Alcanzar una meta semanal</div>
+      <div class="emoji">🏆</div>
+      <h3>Objetivo Alcanzado</h3>
+    </div>
+    
+    <div class="insignia locked" style="background: linear-gradient(135deg, hsl(160, 100%, 90%), hsl(200, 90%, 80%));">
+      <div class="tooltip">Pasar 1 día sin quejarte</div>
+      <div class="emoji">🤐</div>
+      <h3>Sin Quejas</h3>
+    </div>
+    
+    <div class="insignia locked" style="background: linear-gradient(135deg, hsl(170, 100%, 90%), hsl(210, 90%, 80%));">
+      <div class="tooltip">Usar ropa que te haga sentir bien</div>
+      <div class="emoji">🧥</div>
+      <h3>Autoestima Fuerte</h3>
+    </div>
+    
+    <div class="insignia locked" style="background: linear-gradient(135deg, hsl(180, 100%, 90%), hsl(220, 90%, 80%));">
+      <div class="tooltip">Pasar tiempo con seres queridos</div>
+      <div class="emoji">❤️</div>
+      <h3>Tiempo de Calidad</h3>
+    </div>
+    
+    <div class="insignia locked" style="background: linear-gradient(135deg, hsl(190, 100%, 90%), hsl(230, 90%, 80%));">
+      <div class="tooltip">Completar 5 retos mentales</div>
+      <div class="emoji">🧩</div>
+      <h3>Premio Mental</h3>
+    </div>
+    
+    <div class="insignia locked" style="background: linear-gradient(135deg, hsl(200, 100%, 90%), hsl(240, 90%, 80%));">
+      <div class="tooltip">Evaluar tu semana al final de 7 días</div>
+      <div class="emoji">🔍</div>
+      <h3>Revisión Semanal</h3>
+    </div>
+    
+    <div class="insignia locked" style="background: linear-gradient(135deg, hsl(210, 100%, 90%), hsl(250, 90%, 80%));">
+      <div class="tooltip">Completar una tarea que postergabas</div>
+      <div class="emoji">📂</div>
+      <h3>Tarea Hecha</h3>
+    </div>
+    
+    <div class="insignia locked" style="background: linear-gradient(135deg, hsl(220, 100%, 90%), hsl(260, 90%, 80%));">
+      <div class="tooltip">Escribir tu cierre emocional del día</div>
+      <div class="emoji">✍️</div>
+      <h3>Cierre Diario</h3>
+    </div>
+    
+    <div class="insignia locked" style="background: linear-gradient(135deg, hsl(230, 100%, 90%), hsl(270, 90%, 80%));">
+      <div class="tooltip">Incluir vegetales en cada plato</div>
+      <div class="emoji">🥦</div>
+      <h3>Alimentación Sana</h3>
+    </div>
+    
+    <div class="insignia locked" style="background: linear-gradient(135deg, hsl(240, 100%, 90%), hsl(280, 90%, 80%));">
+      <div class="tooltip">Evitar malas palabras 2 días</div>
+      <div class="emoji">🗯️🚫</div>
+      <h3>Sin Malas Palabras</h3>
+    </div>
+    
+    <div class="insignia locked" style="background: linear-gradient(135deg, hsl(250, 100%, 90%), hsl(290, 90%, 80%));">
+      <div class="tooltip">Despertar sin revisar el celular</div>
+      <div class="emoji">📱🚫</div>
+      <h3>Buen Despertar</h3>
+    </div>
+    
+    <div class="insignia locked" style="background: linear-gradient(135deg, hsl(260, 100%, 90%), hsl(300, 90%, 80%));">
+      <div class="tooltip">Hacer algo nuevo y creativo</div>
+      <div class="emoji">🎭</div>
+      <h3>Tarde Creativa</h3>
+    </div>
+    
+    <div class="insignia locked" style="background: linear-gradient(135deg, hsl(270, 100%, 90%), hsl(310, 90%, 80%));">
+      <div class="tooltip">Alcanzar un gran objetivo mensual</div>
+      <div class="emoji">🥇</div>
+      <h3>Meta Alcanzada</h3>
+    </div>
+    
+  </div>
+</div>
+<div class="boton-volver">
+  <a href="index.html">⬅ Volver al inicio</a>
+</div>
+</body>
+</html>

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CalmaMind - Salud Mental</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background: url('fondo.png') no-repeat center center fixed;
+      background-size: cover;
+    }
+
+    header {
+      background: rgba(92, 60, 164, 0.8);
+      color: #fff;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 1.8rem;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 0.5rem;
+    }
+
+    .nav-links span {
+      font-weight: bold;
+    }
+
+    .nav-links a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .nav-links a:hover {
+      text-decoration: underline;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 3rem 1rem 1rem;
+      color: white;
+    }
+
+    .hero h2 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero p {
+      margin: 0 auto;
+      max-width: 600px;
+      font-size: 1.1rem;
+    }
+
+    .modules {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      padding: 2rem;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
+      margin: 2rem;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.2);
+      padding: 1rem;
+      border-radius: 10px;
+      text-align: center;
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      backdrop-filter: blur(8px);
+      transition: transform 0.2s;
+    }
+
+    .card:hover {
+      transform: scale(1.03);
+    }
+
+    .card img {
+      height: 80px;
+      margin-bottom: 1rem;
+    }
+
+    .card h3 {
+      color: #5c3ca4;
+      margin: 0.5rem 0;
+      font-size: 1.2rem;
+    }
+
+    .card p {
+      font-size: 0.95rem;
+      color: #555;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 1rem;
+      background: rgba(226, 220, 247, 0.9);
+      font-size: 0.9rem;
+      margin-top: auto;
+    }
+
+    /* === Estilos del modal transparente === */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(8px);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background: rgba(255, 255, 255, 0.15);
+      padding: 2rem;
+      border-radius: 12px;
+      text-align: center;
+      color: white;
+      width: 90%;
+      max-width: 500px;
+      position: relative;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+    }
+
+    .close {
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 1.4rem;
+      cursor: pointer;
+      color: #fff;
+    }
+
+    @media (max-width: 600px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .hero h2 {
+        font-size: 1.6rem;
+      }
+
+      .hero p {
+        font-size: 1rem;
+      }
+
+      .card img {
+        height: 60px;
+      }
+
+      .card h3 {
+        font-size: 1.1rem;
+      }
+
+      .card p {
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>CalmaMind</h1>
+    <div class="nav-links" id="nav">
+      <a href="login.html">Iniciar Sesión</a>
+      <a href="registro.html">Crear Cuenta</a>
+      <a id="acercaBtn">Acerca de Nosotros</a>
+    </div>
+  </header>
+
+  <section class="hero">
+    <h2>Bienvenido a tu refugio de tranquilidad</h2>
+    <p>CalmaMind te acompaña con ejercicios, retos y herramientas diseñadas para aliviar la ansiedad y promover tu bienestar mental.</p>
+  </section>
+
+  <section class="modules">
+    <div class="card" onclick="redirigir('consejos.html')">
+      <img src="idea.png" alt="Consejos">
+      <h3>Consejos</h3>
+      <p>Recomendaciones diarias para mejorar tu estado de ánimo.</p>
+    </div>
+
+    <div class="card" onclick="accesoPremium('retos.html')">
+      <img src="reto.png" alt="Retos">
+      <h3>Retos</h3>
+      <p>Desafíos semanales para tu bienestar.</p>
+    </div>
+
+    <div class="card" onclick="accesoPremium('insignias.html')">
+      <img src="insignia.png" alt="Insignias">
+      <h3>Insignias</h3>
+      <p>Gana medallas por tu progreso.</p>
+    </div>
+
+    <div class="card" onclick="accesoPremium('sos.html')">
+      <img src="https://img.icons8.com/fluency/48/000000/sos.png" alt="SOS">
+      <h3>SOS</h3>
+      <p>Acceso a herramientas en caso de crisis.</p>
+    </div>
+
+    <div class="card" onclick="accesoPremium('meditacion.html')">
+      <img src="meditacion.png" alt="Meditación">
+      <h3>Meditación</h3>
+      <p>Ejercicios para la calma mental.</p>
+    </div>
+
+    <div class="card" onclick="accesoPremium('terapia.html')">
+      <img src="terapia.png" alt="Terapia">
+      <h3>Terapia</h3>
+      <p>Acceso a apoyo profesional.</p>
+    </div>
+  </section>
+
+  <div class="footer">&copy; 2025 CalmaMind. Todos los derechos reservados.</div>
+
+  <!-- === Modal Acerca de Nosotros === -->
+  <div id="modalAcerca" class="modal">
+    <div class="modal-content">
+      <span class="close" id="cerrarModal">&times;</span>
+      <h2>Acerca de Nosotros</h2>
+      <p>En <strong>CalmaMind</strong>, creemos que el bienestar mental es esencial. 
+         Nuestra misión es ofrecerte un espacio seguro, lleno de herramientas 
+         y recursos que te ayuden a reconectar contigo mismo y a encontrar la calma 
+         en medio del ritmo acelerado del día a día.</p>
+    </div>
+  </div>
+
+  <script>
+    function verificarSesion() {}
+
+    function cerrarSesion() {}
+
+    document.addEventListener('click', function (e) {
+      if (e.target.id === 'cerrarSesion') {
+        e.preventDefault();
+        cerrarSesion();
+      }
+    });
+
+    function redirigir(url) {
+      window.location.href = url;
+    }
+
+    function accesoPremium(url) {
+      window.location.href = url;
+    }
+
+    verificarSesion();
+
+    // --- Lógica del modal ---
+    const modal = document.getElementById('modalAcerca');
+    const abrir = document.getElementById('acercaBtn');
+    const cerrar = document.getElementById('cerrarModal');
+
+    abrir.onclick = () => { modal.style.display = 'flex'; }
+    cerrar.onclick = () => { modal.style.display = 'none'; }
+    window.onclick = (e) => { if (e.target === modal) modal.style.display = 'none'; }
+  </script>
+</body>
+</html>
